@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @Builder
@@ -12,7 +13,7 @@ import lombok.*;
 @Entity(name="users")
 public class UserVO {
     @Id
-    private String id;
+    private String email;
 
     private String password;
     @Column(columnDefinition = "nvarchar(10)")
@@ -20,5 +21,10 @@ public class UserVO {
     @Column(columnDefinition = "nvarchar(10)")
     private String name;
     private String birth;
+
+    public void update(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
 
 }
