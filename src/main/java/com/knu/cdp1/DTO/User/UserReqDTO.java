@@ -1,5 +1,6 @@
 package com.knu.cdp1.DTO.User;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.knu.cdp1.vo.UserVO;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserReqDTO {
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String nickname;
     private String name;

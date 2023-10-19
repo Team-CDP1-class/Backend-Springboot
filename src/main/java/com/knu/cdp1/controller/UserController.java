@@ -3,12 +3,9 @@ package com.knu.cdp1.controller;
 import com.knu.cdp1.DTO.User.UserReqDTO;
 import com.knu.cdp1.service.UserService;
 import com.knu.cdp1.vo.Message;
-import com.knu.cdp1.vo.UserVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.knu.cdp1.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,11 +17,11 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/users")
-    public ResponseEntity<?> save(@RequestBody UserReqDTO reqDTO){
+    public ResponseEntity<?> register(@RequestBody UserReqDTO reqDTO){
         System.out.println("save User");
         Message message = new Message();
 
-        String res = userService.save(reqDTO);
+        String res = userService.register(reqDTO);
         if (res != null) message.buildMessage(true, HttpStatus.CREATED, "요청에 성공했습니다.", res);
         else message.buildMessage(false, HttpStatus.BAD_REQUEST, "요청에 실패했습니다.", null);
 
@@ -45,13 +42,17 @@ public class UserController {
     }
 
     // 로그인
-//    @PostMapping("/users/login")
-//    public ResponseEntity<?> lonIn(@RequestBody UserReqDTO userReqDTO) {
-//        System.out.println("logIn User");
-//        Message message = new Message();
-//
-//
-//    }
+    @PostMapping("/users/login")
+    public ResponseEntity<?> lonIn(@RequestBody UserReqDTO userReqDTO) {
+        System.out.println("logIn User");
+        Message message = new Message();
+
+        String res = userService.logIn(userReqDTO);
+        message.buildMessage(true, HttpStatus.OK, "로그인 성공", res);
+
+        return ResponseEntity.status(message.getStatusCode()).body(message);
+
+    }
 
     // 로그아웃
 
