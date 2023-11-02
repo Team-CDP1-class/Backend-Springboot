@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,17 +22,22 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    @Transactional
     public String register(UserReqDTO reqDTO) {
         // 비밀번호 인코더 안함
-        var user = reqDTO.toEntity();
+        var user = UserVO.builder()
+                .email(reqDTO.getEmail())
+                .password(passwordEncoder.encode(reqDTO.getPassword()))
+                .name(reqDTO.getName())
+                .nickname(reqDTO.getNickname())
+                .birth(reqDTO.getBirth())
+                .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return jwtToken;
     }
 
-    @Transactional
     public String logIn(UserReqDTO reqDTO) {
+        System.out.println(reqDTO.getEmail() + reqDTO.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         reqDTO.getEmail(),

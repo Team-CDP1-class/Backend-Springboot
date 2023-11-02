@@ -35,6 +35,7 @@ public class ApplicationConfig {
         return authProvider;
     }
 
+    // 현재 사용자를 반환
 //    @Bean
 //    public AuditorAware<Integer> auditorAware() {
 //        return new ApplicationAuditAware();
