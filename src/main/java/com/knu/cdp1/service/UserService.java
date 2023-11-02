@@ -58,8 +58,7 @@ public class UserService {
     public boolean findByEmail(String email) {
         Optional<UserVO> entity = userRepository.findByEmail(email);
 
-        if (entity == null) return true;
-        else return false;
+        return entity.isEmpty();
     }
 
     @Transactional

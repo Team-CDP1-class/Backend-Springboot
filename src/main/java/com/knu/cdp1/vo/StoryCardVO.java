@@ -2,12 +2,15 @@ package com.knu.cdp1.vo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name="story_card")
+@EntityListeners(AuditingEntityListener.class)
 public class StoryCardVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +19,10 @@ public class StoryCardVO {
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
 //    private UserVO user;
+
+//    @CreatedBy
+//    @Column()
+//    private String user_email;
 
     @Column(columnDefinition = "nvarchar(1000)")
     private String premise;

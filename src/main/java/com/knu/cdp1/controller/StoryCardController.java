@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://192.168.56.1:3000/", allowedHeaders = "*")
 public class StoryCardController {
 
     private final StoryCardService storyCardService;
