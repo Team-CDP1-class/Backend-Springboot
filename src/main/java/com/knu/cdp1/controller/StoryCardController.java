@@ -84,5 +84,4 @@ public class StoryCardController {
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
     }
-
 }
