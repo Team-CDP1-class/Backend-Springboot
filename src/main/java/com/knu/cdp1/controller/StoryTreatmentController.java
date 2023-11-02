@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequiredArgsConstructor
@@ -17,6 +18,10 @@ public class StoryTreatmentController {
     public ResponseEntity<?> analysis(@RequestBody String StoryTreatment) {
         System.out.println("Story Treatment Analysis");
         Message message = new Message();
+
+        final String url = "";
+        RestTemplate restTemplate = new RestTemplate();
+
 
 
 
