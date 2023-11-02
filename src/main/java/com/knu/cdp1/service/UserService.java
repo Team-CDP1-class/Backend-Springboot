@@ -1,5 +1,7 @@
 package com.knu.cdp1.service;
 
+import com.knu.cdp1.DTO.Authentication.AuthReq;
+import com.knu.cdp1.DTO.Authentication.AuthRes;
 import com.knu.cdp1.DTO.User.UserReqDTO;
 import com.knu.cdp1.repository.UserRepository;
 import com.knu.cdp1.vo.UserVO;
@@ -36,17 +38,20 @@ public class UserService {
         return jwtToken;
     }
 
-    public String logIn(UserReqDTO reqDTO) {
-        System.out.println(reqDTO.getEmail() + reqDTO.getPassword());
+    public String logIn(AuthReq authReq) {
+        System.out.println(authReq.getEmail() + authReq.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        reqDTO.getEmail(),
-                        reqDTO.getPassword()
+                        authReq.getEmail(),
+                        authReq.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(reqDTO.getEmail())
+        var user = userRepository.findByEmail(authReq.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+//        var refreshToken = jwtService.generateRefreshToken(user);
+//        revokeAllUserTokens(user);
+//        saveUserToken(user, jwtToken);
         return jwtToken;
     }
 
