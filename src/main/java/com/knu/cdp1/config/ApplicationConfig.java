@@ -36,10 +36,10 @@ public class ApplicationConfig {
     }
 
     // 현재 사용자를 반환
-//    @Bean
-//    public AuditorAware<Integer> auditorAware() {
-//        return new ApplicationAuditAware();
-//    }
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return new ApplicationAuditAware();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {

@@ -25,34 +25,33 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
 
     public String register(UserReqDTO reqDTO) {
-        // 비밀번호 인코더 안함
-        var user = UserVO.builder()
-                .email(reqDTO.getEmail())
-                .password(passwordEncoder.encode(reqDTO.getPassword()))
-                .name(reqDTO.getName())
-                .nickname(reqDTO.getNickname())
-                .birth(reqDTO.getBirth())
-                .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return jwtToken;
+        if (userRepository.findByEmail(reqDTO.getEmail()).isEmpty()) {
+            var user = UserVO.builder()
+                    .email(reqDTO.getEmail())
+                    .password(passwordEncoder.encode(reqDTO.getPassword()))
+                    .name(reqDTO.getName())
+                    .nickname(reqDTO.getNickname())
+                    .birth(reqDTO.getBirth())
+                    .build();
+            userRepository.save(user);
+            return jwtService.generateToken(user);
+        } else return null;
     }
 
-    public String logIn(AuthReq authReq) {
-        System.out.println(authReq.getEmail() + authReq.getPassword());
+    public AuthRes logIn(UserReqDTO reqDTO) {
+        System.out.println(reqDTO.getEmail() + reqDTO.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        authReq.getEmail(),
-                        authReq.getPassword()
+                        reqDTO.getEmail(),
+                        reqDTO.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(authReq.getEmail())
+        var user = userRepository.findByEmail(reqDTO.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
-//        var refreshToken = jwtService.generateRefreshToken(user);
-//        revokeAllUserTokens(user);
-//        saveUserToken(user, jwtToken);
-        return jwtToken;
+        return AuthRes.builder()
+                .accessToken(jwtToken)
+                .build();
     }
 
     @Transactional

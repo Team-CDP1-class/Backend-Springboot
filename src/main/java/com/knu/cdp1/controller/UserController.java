@@ -1,6 +1,6 @@
 package com.knu.cdp1.controller;
 
-import com.knu.cdp1.DTO.Authentication.AuthReq;
+import com.knu.cdp1.DTO.Authentication.AuthRes;
 import com.knu.cdp1.DTO.User.UserReqDTO;
 import com.knu.cdp1.service.UserService;
 import com.knu.cdp1.vo.Message;
@@ -45,18 +45,21 @@ public class UserController {
 
     // 로그인
     @PostMapping("/users/login")
-    public ResponseEntity<?> lonIn(@RequestBody AuthReq authReq) {
+    public ResponseEntity<?> lonIn(@RequestBody UserReqDTO reqDTO) {
         System.out.println("logIn User");
         Message message = new Message();
 
-        String res = userService.logIn(authReq);
+        AuthRes res = userService.logIn(reqDTO);
         message.buildMessage(true, HttpStatus.OK, "로그인 성공", res);
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
-
     }
 
     // 로그아웃
+//    @PostMapping("/users/logout")
+//    public ResponseEntity<?> logOut() {
+//
+//    }
 
     // 회원정보 수정
     @PatchMapping("/users")
@@ -70,6 +73,4 @@ public class UserController {
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
     }
-
-
 }
