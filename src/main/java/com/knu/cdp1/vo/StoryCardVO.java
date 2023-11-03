@@ -16,13 +16,9 @@ public class StoryCardVO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private UserVO user;
-
-//    @CreatedBy
-//    @Column()
-//    private String user_email;
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private String user_email;
 
     @Column(columnDefinition = "nvarchar(1000)")
     private String premise;
