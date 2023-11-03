@@ -55,8 +55,10 @@ public class WebSecurityConfig {
 
         //config.setAllowedOrigins(Arrays.asList("http://192.168.56.1:3000", "http://localhost:3000"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        config.addExposedHeader("Authorization");
         config.addAllowedMethod("*");
         config.addAllowedOriginPattern("*");
+        config.addAllowedHeader("*");
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
