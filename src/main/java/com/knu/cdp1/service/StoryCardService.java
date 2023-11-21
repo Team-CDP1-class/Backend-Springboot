@@ -8,8 +8,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +22,6 @@ public class StoryCardService {
         return storyCardRepository.save(reqDTO.toEntity()).getId();
     }
 
-    @Transactional
     public StoryCardResDTO findById(Long id) {
         StoryCardVO entity = storyCardRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 스토리 카드가 없습니다. id=" + id));
@@ -30,12 +29,11 @@ public class StoryCardService {
         return new StoryCardResDTO(entity);
     }
 
-    @Transactional
-    public List<StoryCardResDTO> findAll() {
-        List<StoryCardVO> entity = storyCardRepository.findAll();
+    public List<StoryCardResDTO> findByEmail(String userEmail) {
+        List<StoryCardVO> entityList = storyCardRepository.findAllByUserEmail(userEmail);
         List<StoryCardResDTO> reqList = new ArrayList<>();
-        for(int i = 0; i < entity.size(); i++)
-            reqList.add(new StoryCardResDTO(entity.get(i)));
+        for(int i = 0; i < entityList.size(); i++)
+            reqList.add(new StoryCardResDTO(entityList.get(i)));
 
         return reqList;
     }

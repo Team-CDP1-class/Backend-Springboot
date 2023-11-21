@@ -24,7 +24,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-    private static final String[] WHITE_LIST_URL = {"/api/users/**", "/error"};
+    private static final String[] WHITE_LIST_URL = {"/**", "/api/users/**", "/error"};
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 

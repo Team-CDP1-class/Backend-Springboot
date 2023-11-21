@@ -2,6 +2,8 @@ package com.knu.cdp1.controller;
 
 import com.knu.cdp1.DTO.StoryCard.StoryCardReqDTO;
 import com.knu.cdp1.DTO.StoryCard.StoryCardResDTO;
+import com.knu.cdp1.service.JwtService;
+import com.knu.cdp1.service.LangChainService;
 import com.knu.cdp1.service.StoryCardService;
 import com.knu.cdp1.vo.Message;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,11 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://192.168.56.1:3000/", allowedHeaders = "*")
 public class StoryCardController {
 
     private final StoryCardService storyCardService;
+    private final LangChainService langChainService;
+    private final JwtService jwtService;
 
     // 스토리카드 저장
     @PostMapping("/storycard")
@@ -29,6 +32,19 @@ public class StoryCardController {
         int res = storyCardService.save(reqDTO);
         if (res > 0) message.buildMessage(true, HttpStatus.CREATED, "요청에 성공했습니다.",res);
         else message.buildMessage(false, HttpStatus.BAD_REQUEST, "요청에 실패했습니다.",null);
+
+        return ResponseEntity.status(message.getStatusCode()).body(message);
+    }
+
+    // 스토리카드 분석
+    // 스토리카드 저장하고 반환된 스토리카드 ID로 스토리카드 분석 API 호출
+    @PostMapping("/storycard/{storycardId}")
+    public ResponseEntity<?> analysis(@PathVariable("storycardId") Long storycardId) {
+        System.out.println("Analysis StoryCard");
+        Message message = new Message();
+
+        // 스토리카드 엔티티 가져오기
+        // langChainService
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
     }
@@ -48,11 +64,14 @@ public class StoryCardController {
 
     // 스토리카드 목록 조회
     @GetMapping("/storycard")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findAll(@RequestHeader(value = "Authorization", required = true) String token) {
         System.out.println("findAll StoryCard");
         Message message = new Message();
 
-        List<StoryCardResDTO> resDTO = storyCardService.findAll();
+        String userEmail = jwtService.extractUsername(token.substring(7));
+        System.out.println(userEmail);
+
+        List<StoryCardResDTO> resDTO = storyCardService.findByEmail(userEmail);
         message.buildMessage(true, HttpStatus.OK, "요청에 성공했습니다.", resDTO);
 
         return ResponseEntity.status(message.getStatusCode()).body(message);

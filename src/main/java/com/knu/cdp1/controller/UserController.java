@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://192.168.56.1:3000/", allowedHeaders = "*")
 public class UserController {
 
     private final UserService userService;
@@ -57,9 +56,7 @@ public class UserController {
 
     // 로그아웃
 //    @PostMapping("/users/logout")
-//    public ResponseEntity<?> logOut() {
-//
-//    }
+//    public ResponseEntity<?> logOut() { }
 
     // 회원정보 수정
     @PatchMapping("/users")

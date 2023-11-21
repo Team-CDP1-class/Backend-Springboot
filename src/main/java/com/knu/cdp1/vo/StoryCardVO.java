@@ -17,8 +17,8 @@ public class StoryCardVO {
     private int id;
 
     @CreatedBy
-    @Column(nullable = false, updatable = false)
-    private String user_email;
+    @Column(name = "user_email", nullable = false, updatable = false)
+    private String userEmail;
 
     @Column(columnDefinition = "nvarchar(1000)")
     private String premise;
