@@ -7,19 +7,13 @@ import com.knu.cdp1.service.JwtService;
 import com.knu.cdp1.service.LangChainService;
 import com.knu.cdp1.service.StoryCardService;
 import com.knu.cdp1.vo.Message;
-import com.knu.cdp1.vo.StoryCardVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
