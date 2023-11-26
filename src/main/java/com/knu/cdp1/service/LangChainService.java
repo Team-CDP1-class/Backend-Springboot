@@ -15,7 +15,7 @@ public class LangChainService {
 
     // 스토리카드 분석 요청
     public StoryCardAnalysis analysisStoryCard(StoryCardResDTO storycard){
-        String fastApiUrl = "http://localhost:8099/api/analysis/storycard";
+        String fastApiUrl = "http://20.127.245.133:8099/api/analysis/storycard";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -39,7 +39,7 @@ public class LangChainService {
 
     // 스토리트리트먼트 분석 요청
     public StoryTreatmentAnalysis analysisStoryTreatment(String contents) {
-        String fastApiUrl = "http://localhost:8099/api/analysis/storytreatment";
+        String fastApiUrl = "http://20.127.245.133:8099/api/analysis/storytreatment";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
