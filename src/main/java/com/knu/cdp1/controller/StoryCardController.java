@@ -1,5 +1,6 @@
 package com.knu.cdp1.controller;
 
+import com.knu.cdp1.DTO.Analysis.StoryCardAnalysis;
 import com.knu.cdp1.DTO.StoryCard.StoryCardReqDTO;
 import com.knu.cdp1.DTO.StoryCard.StoryCardResDTO;
 import com.knu.cdp1.service.JwtService;
@@ -13,7 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,16 +44,19 @@ public class StoryCardController {
     }
 
     // 스토리카드 분석
-    // 스토리카드 저장하고 반환된 스토리카드 ID로 스토리카드 분석 API 호출
     @PostMapping("/storycard/{storycardId}")
     public ResponseEntity<?> analysis(@PathVariable("storycardId") Long storycardId) {
         System.out.println("Analysis StoryCard");
         Message message = new Message();
 
-        // 스토리카드 엔티티 가져오기
         StoryCardResDTO resDTO = storyCardService.findById(storycardId);
-        System.out.println(resDTO);
-        langChainService.analysisStoryCard(resDTO);
+        StoryCardAnalysis analysis = langChainService.analysisStoryCard(resDTO);
+        if (analysis == null) message.buildMessage(false, HttpStatus.BAD_REQUEST, "요청에 실패했습니다.", null);
+        else {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("storyCardAnalysis", analysis);
+            message.buildMessage(true, HttpStatus.OK, "요청에 성공했습니다.", resultMap);
+        }
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
     }
