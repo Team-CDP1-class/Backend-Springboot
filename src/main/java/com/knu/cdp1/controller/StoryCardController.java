@@ -6,6 +6,7 @@ import com.knu.cdp1.service.JwtService;
 import com.knu.cdp1.service.LangChainService;
 import com.knu.cdp1.service.StoryCardService;
 import com.knu.cdp1.vo.Message;
+import com.knu.cdp1.vo.StoryCardVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,9 @@ public class StoryCardController {
         Message message = new Message();
 
         // 스토리카드 엔티티 가져오기
-        // langChainService
+        StoryCardResDTO resDTO = storyCardService.findById(storycardId);
+        System.out.println(resDTO);
+        langChainService.analysisStoryCard(resDTO);
 
         return ResponseEntity.status(message.getStatusCode()).body(message);
     }
