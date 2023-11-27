@@ -11,4 +11,4 @@ To build and run the project, follow these steps:
 3. Build the project: mvn clean install
 4. Run the project: mvn spring-boot:run
    
-***You must include .application properties file in src/main/resources***
+***You must include application.properties file in src/main/resources***
