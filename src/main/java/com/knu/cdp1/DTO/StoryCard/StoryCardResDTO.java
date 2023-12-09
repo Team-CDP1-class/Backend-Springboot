@@ -20,4 +20,10 @@ public class StoryCardResDTO {
         this.outline = entity.getOutline();
         this.storycard_name = entity.getStorycard_name();
     }
+
+    public double getBytes() {
+        return premise.getBytes().length + setting.getBytes().length +
+                characters.getBytes().length + outline.getBytes().length;
+    }
+
 }

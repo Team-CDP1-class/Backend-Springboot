@@ -4,11 +4,14 @@ import com.knu.cdp1.DTO.Authentication.AuthRes;
 import com.knu.cdp1.DTO.User.UserReqDTO;
 import com.knu.cdp1.service.UserService;
 import com.knu.cdp1.vo.Message;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "User API", description = "")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -17,6 +20,7 @@ public class UserController {
     private final UserService userService;
 
     // 회원가입
+    @Operation(summary = "회원가입", description = "설명")
     @PostMapping("/users")
     public ResponseEntity<?> register(@RequestBody UserReqDTO reqDTO){
         System.out.println("save User");
@@ -30,6 +34,7 @@ public class UserController {
     }
 
     // 이메일 중복 확인
+    @Operation(summary = "이메일 중복 확인", description = "설명")
     @PostMapping("/users/email")
     public ResponseEntity<?> checkEmail(@RequestBody UserReqDTO reqDTO) {
         System.out.println("check Email: " + reqDTO.getEmail());
@@ -43,6 +48,7 @@ public class UserController {
     }
 
     // 로그인
+    @Operation(summary = "로그인", description = "설명")
     @PostMapping("/users/login")
     public ResponseEntity<?> lonIn(@RequestBody UserReqDTO reqDTO) {
         System.out.println("logIn User");
@@ -59,6 +65,7 @@ public class UserController {
 //    public ResponseEntity<?> logOut() { }
 
     // 회원정보 수정
+    @Operation(summary = "회원정보 수정", description = "설명")
     @PatchMapping("/users")
     public ResponseEntity<?> modify(@RequestBody UserReqDTO reqDTO) {
         System.out.println("modify User");

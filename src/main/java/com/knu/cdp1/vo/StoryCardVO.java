@@ -40,5 +40,4 @@ public class StoryCardVO {
         this.outline = outline;
         this.storycard_name = storycard_name;
     }
-
 }

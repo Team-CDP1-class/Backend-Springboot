@@ -4,9 +4,9 @@ import com.knu.cdp1.DTO.StoryCard.StoryCardReqDTO;
 import com.knu.cdp1.DTO.StoryCard.StoryCardResDTO;
 import com.knu.cdp1.repository.StoryCardRepository;
 import com.knu.cdp1.vo.StoryCardVO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -21,6 +21,7 @@ public class StoryCardService {
         return storyCardRepository.save(reqDTO.toEntity()).getId();
     }
 
+    @Transactional(readOnly = true)
     public StoryCardResDTO findById(Long id) {
         StoryCardVO entity = storyCardRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 스토리 카드가 없습니다. id=" + id));
@@ -28,6 +29,7 @@ public class StoryCardService {
         return new StoryCardResDTO(entity);
     }
 
+    @Transactional(readOnly = true)
     public List<StoryCardResDTO> findByEmail(String userEmail) {
         List<StoryCardVO> entityList = storyCardRepository.findAllByUserEmail(userEmail);
         List<StoryCardResDTO> reqList = new ArrayList<>();
